@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Framework">
+      <UniqueIdentifier>{746ee795-aedc-421e-b230-303ee827f67b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{098f2957-318b-4ae2-a4ae-7ec57f9193e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\StandingGrounds">
+      <UniqueIdentifier>{38eb1a82-4d63-4c55-9a05-415d05f1c1de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Mobs&amp;Player">
+      <UniqueIdentifier>{a24c9f32-b05b-45ce-95d0-69332e1686e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Blocks">
+      <UniqueIdentifier>{ee84210f-91c9-4cd6-b832-3d1c4499ab01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Areas">
+      <UniqueIdentifier>{a2eed87e-8c56-4bf6-b619-5123bf17275e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\InteractiveObjects">
+      <UniqueIdentifier>{001dfc51-ad77-474f-b589-50c424341d39}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScence.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Scence.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Source Files\Objects\Areas</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Source Files\Objects\Areas</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files\Objects\StandingGrounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Indestructible.cpp">
+      <Filter>Source Files\Objects\StandingGrounds</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>Source Files\Objects\InteractiveObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="coin.cpp">
+      <Filter>Source Files\Objects\InteractiveObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Source Files\Objects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Mysterious.cpp">
+      <Filter>Source Files\Objects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopas.cpp">
+      <Filter>Source Files\Objects\Mobs&amp;Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Source Files\Objects\Mobs&amp;Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Source Files\Objects\Mobs&amp;Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Indestructible.h">
+      <Filter>Source Files\Objects\StandingGrounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Source Files\Objects\StandingGrounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Source Files\Objects\Mobs&amp;Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopas.h">
+      <Filter>Source Files\Objects\Mobs&amp;Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>Source Files\Objects\Mobs&amp;Player</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEventHandler.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScence.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Scence.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Source Files\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Mysterious.h">
+      <Filter>Source Files\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Source Files\Objects\Areas</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Source Files\Objects\Areas</Filter>
+    </ClInclude>
+    <ClInclude Include="coin.h">
+      <Filter>Source Files\Objects\InteractiveObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>Source Files\Objects\InteractiveObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\Background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
