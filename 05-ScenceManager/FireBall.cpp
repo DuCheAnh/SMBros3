@@ -6,7 +6,7 @@ FireBall::FireBall(float x, float y, int direction)
 	PreLoadAni();
 	this->x = x;
 	this->y = y;
-	vx = direction * BULLET_VX;
+	vx = direction * FIREBALL_VX;
 
 }
 
@@ -20,8 +20,8 @@ void FireBall::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + BULLET_BBOX_WIDTH;
-	b = y + BULLET_BBOX_HEIGHT;
+	r = x + FIREBALL_BBOX_WIDTH;
+	b = y + FIREBALL_BBOX_HEIGHT;
 }
 
 void FireBall::PreLoadAni()
@@ -37,7 +37,7 @@ void FireBall::Update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	vy += BULLET_GRAVITY * dt;
+	vy += FIREBALL_GRAVITY * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;

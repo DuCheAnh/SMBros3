@@ -379,12 +379,16 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_SPACE:
 		mario->SetState(SPACE_RELEASED);
 		break;
+	case DIK_DOWN:
+		mario->SetState(JUST_SIT);
+		break;
 	case DIK_A:
 		FireBall* fb = new FireBall(mario->x+5, mario->y, mario->nx);
 		mario->SetState(SHOOT_FIREBALL);
 		CPlayScene* scene_inst = ((CPlayScene*)scence)->getScene();
 		scene_inst->AddObject(fb);
 		break;
+	
 	}
 }
 
@@ -399,6 +403,8 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		mario->SetState(MARIO_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
 		mario->SetState(MARIO_STATE_WALKING_LEFT);
+	else if (game->IsKeyDown(DIK_DOWN))
+		mario->SetState(MARIO_STATE_SIT);
 	else
 		mario->SetState(MARIO_STATE_IDLE);
 	if (game->IsKeyDown(DIK_SPACE))

@@ -162,6 +162,27 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					isACoin = true;
 				}
 			}
+			if (dynamic_cast<CKoopas*>(e->obj))
+			{
+				CKoopas* koopa = dynamic_cast<CKoopas*>(e->obj);
+				if (koopa->GetState() == KOOPAS_STATE_SHELL_MOVING && e->nx!=0)
+				{
+					isACoin = true;
+					if (untouchable == 0)
+					{
+						if (koopa->GetState() != GOOMBA_STATE_DIE)
+						{
+							if (level > MARIO_LEVEL_SMALL)
+							{
+								level = MARIO_LEVEL_SMALL;
+								StartUntouchable();
+							}
+							else
+								SetState(MARIO_STATE_DIE);
+						}
+					}
+				}
+			}
 		}
 		if (!isACoin)
 		{
@@ -219,17 +240,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				{
 					if (koopa->GetState() != KOOPAS_STATE_DIE)
 					{
-						koopa->SetState(KOOPAS_STATE_DIE);
+						koopa->SetState(KOOPAS_STATE_SHELL);
 						//vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 				}
 				if (e->nx != 0)
 				{
-				if (koopa->GetState() == KOOPAS_STATE_DIE)
+					if (koopa->GetState() == KOOPAS_STATE_SHELL)
 					{
-					koopa->SetState(KOOPAS_SHELL_MOVE);
-					//vy = -MARIO_JUMP_DEFLECT_SPEED;
+						koopa->SetState(KOOPAS_STATE_SHELL_MOVING);
 					}
+					
 				}
 			}
 			else if (dynamic_cast<CPortal *>(e->obj))
@@ -371,21 +392,21 @@ void CMario::SetState(int state)
 		break;
 	case SHOOT_FIREBALL:
 		FireBall* fb = new FireBall(x, y,nx);
-		
 		break;
+	
 	}
 }
 
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	int temp = 0;
+	top = y;
 	left = x-temp;
-	top = y; 
 	if (level == MARIO_LEVEL_RACOON && nx > 0)
 	{
 		temp = 5;
 	}
-	if (level!=MARIO_LEVEL_SMALL)
+	if (level!=MARIO_LEVEL_SMALL && state!=MARIO_STATE_SIT)
 	{
 		right = x +temp +MARIO_BIG_BBOX_WIDTH;
 		bottom = y + MARIO_BIG_BBOX_HEIGHT;

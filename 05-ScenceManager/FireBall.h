@@ -5,14 +5,13 @@
 #include "GameObject.h"
 
 
-#define BULLET_BBOX_WIDTH 6
-#define BULLET_BBOX_HEIGHT 6
-#define BULLET_VX 0.2
-#define BULLET_GRAVITY 0.003f 
+#define FIREBALL_BBOX_WIDTH 6
+#define FIREBALL_BBOX_HEIGHT 6
+#define FIREBALL_VX 0.2
+#define FIREBALL_GRAVITY 0.003f 
 #define BOUNCING_FORCE 0.012f
 
 
-#define ANI_BULLET	"ani-fire-ball"
 class FireBall :public CGameObject
 {
 public:

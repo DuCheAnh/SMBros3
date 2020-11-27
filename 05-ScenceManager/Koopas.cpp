@@ -13,7 +13,7 @@ void CKoopas::GetBoundingBox(float& left, float& top, float& right, float& botto
 	top = y;
 	right = x + KOOPAS_BBOX_WIDTH;
 
-	if (state == KOOPAS_STATE_DIE)
+	if (state == KOOPAS_STATE_SHELL ||state==KOOPAS_STATE_SHELL_MOVING)
 		bottom = y + KOOPAS_BBOX_HEIGHT_DIE;
 	else
 		bottom = y + KOOPAS_BBOX_HEIGHT;
@@ -23,16 +23,9 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
-	if (!isDead)
-	{
-		vy += 0.002f * dt;
-		vx = -0.003 * dt;
-	}
-	else if (state == KOOPAS_SHELL_MOVE)
-	{
-		vx = -0.01 * dt;
-	}
-	if (isDead && state!=KOOPAS_SHELL_MOVE)
+	vy += 0.002f * dt;
+
+	if (isDead)
 	{
 		vx = 0;
 		if (timeframe <= 30)
@@ -43,31 +36,29 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
+
+	// turn off collision when die 
 	if (timeframe <= 30)
-	{
 		CalcPotentialCollisions(coObjects, coEvents);
 
-		if (coEvents.size() == 0)
-		{
-			x += dx;
-			y += dy;
-		}
-		else
-		{
-			float min_tx, min_ty, nx = 0, ny;
-			float rdx = 0;
-			float rdy = 0;
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
 
-			// TODO: This is a very ugly designed function!!!!
-			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-			x += min_tx * dx + nx * 0.4f;
-			if (ny < 0) y += min_ty * dy + ny * 0.4f;
-			if (nx != 0) vx = -vx;
-			if (ny != 0)
-			{
-				vy = 0;
-			}
+		// TODO: This is a very ugly designed function!!!!
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+		x += min_tx * dx + nx * 0.4f;
+		if (ny<0) y += min_ty * dy + ny * 0.4f;
 
+	
+		bool passthrough = false;
 			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
 				LPCOLLISIONEVENT e = coEventsResult[i];
@@ -76,15 +67,24 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					isDead = true;
 					vy = -KOOPAS_DEFLECT_FORCE;
 				}
+				if (dynamic_cast<CMario*>(e->obj))
+				{
+					passthrough = true;
+				}
 			}
+			if (nx != 0 )
+			{
+				vx = -vx;
+			}
+			if (ny != 0) vy = 0;
 		}
-	}
+	
 
 }
 
 void CKoopas::Render()
 {
-	if (timeframe > 30) return;
+	//if (timeframe > 30) return;
 	int ani = KOOPAS_ANI_WALKING_LEFT;
 	if (vx < 0) ani = KOOPAS_ANI_WALKING_LEFT;
 	else if (vx > 0) ani = KOOPAS_ANI_WALKING_RIGHT;
@@ -108,8 +108,12 @@ void CKoopas::SetState(int state)
 	case KOOPAS_STATE_WALKING:
 		vx = -KOOPAS_WALKING_SPEED;
 		break;
-	case KOOPAS_SHELL_MOVE:
-		vx = -0.1;
+	case KOOPAS_STATE_SHELL:
+		vy = 0;
+		vx = 0;
+		break;
+	case KOOPAS_STATE_SHELL_MOVING:
+		vx = -0.2;
 		break;
 	}
 }

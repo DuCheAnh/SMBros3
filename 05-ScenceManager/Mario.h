@@ -24,6 +24,8 @@
 #define MARIO_NORMALIZE				700
 #define SPACE_RELEASED				800
 #define SHOOT_FIREBALL				900
+#define MARIO_STATE_SIT				1000
+#define JUST_SIT					1100
 #pragma region Big ani
 #define MARIO_ANI_BIG_IDLE_RIGHT		0
 #define MARIO_ANI_BIG_IDLE_LEFT			1
