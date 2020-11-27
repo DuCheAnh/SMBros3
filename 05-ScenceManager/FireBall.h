@@ -9,14 +9,14 @@
 #define BULLET_BBOX_HEIGHT 6
 #define BULLET_VX 0.2
 #define BULLET_GRAVITY 0.003f 
-#define BOUNCING_FORCE 0.01f
+#define BOUNCING_FORCE 0.012f
 
 
 #define ANI_BULLET	"ani-fire-ball"
 class FireBall :public CGameObject
 {
 public:
-
+	bool fireOut = false;
 	FireBall(float x, float y, int direction);
 	~FireBall() {  };
 	virtual void Render();

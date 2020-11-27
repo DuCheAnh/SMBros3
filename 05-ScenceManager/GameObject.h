@@ -57,7 +57,8 @@ public:
 	int nx;	 
 
 	int state;
-
+	
+	int timeframe=0;
 	DWORD dt; 
 
 	LPANIMATION_SET animation_set;

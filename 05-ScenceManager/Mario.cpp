@@ -32,26 +32,67 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Calculate dx, dy 
 	vx = vx + a * dt;
 	CGameObject::Update(dt);
+	if (!isFlying) vy += (MARIO_GRAVITY / slow_fall_mu1) * dt;
+	DebugOut(L"time:%d\n", timeframe);
 	// Simple fall down
-	vy += (MARIO_GRAVITY/slow_fall_mu1)*dt;
-	DebugOut(L"mul=%d\n", mul);
-	if (isOnFloor) {
-		mul = 1; DebugOut(L"FLOOR");
+	if (isOnFloor) 
+	{
+		mul = 1;
 	}
-	else DebugOut(L"Ceiling");
 	if (abs(vx) > maximum_speed_mul * MARIO_WALKING_SPEED)
 	{
 		vx = nx*maximum_speed_mul * MARIO_WALKING_SPEED;
 	}
 	if (abs(vx) >= 4 * MARIO_WALKING_SPEED)
 	{
-		DebugOut(L"Maxed\n");
+		if (state == MARIO_STATE_JUMP)
+		{
+			isFlying = true;
+			if (nx > 0) flyingRight = true;
+			else flyingRight = false;
+		}
 	}
-	if (state == MARIO_HOLD_JUMP && !isOnFloor && mul == 0 && vy > 0)
+	if (isFlying)
 	{
-		DebugOut(L"SLOWFALLING\n");
-		slow_fall_mu1 = 20;
+		vy += (MARIO_GRAVITY/20 ) * dt;
+		if (state == MARIO_STATE_JUMP)
+		{
+			vy = -0.005f * dt;
+			if (flyingRight)
+				vx = MARIO_WALKING_SPEED / 3 * dt;
+			else vx = -MARIO_WALKING_SPEED / 3 * dt;
+		}
+		isOnFloor = false;
+		mul = 0;
+		
 	}
+	if (vy > 0 && isFlying)
+	{
+		isFlying = false;
+		SetState(MARIO_STATE_JUMP);
+	}
+	if (isSlowFalling)
+	{
+		if (timeframe < 40)
+		{
+			++timeframe;
+			slow_fall_mu1 = 50;
+		}
+		if (timeframe >= 40)
+		{
+			timeframe = 0;
+			slow_fall_mu1 = 1;
+			isSlowFalling = false;
+		}
+	}
+	if (state == MARIO_STATE_JUMP && !isOnFloor && mul == 0 && vy > 0)
+	{
+ 		timeframe = 0;
+		DebugOut(L"SLOWING\n");
+		isSlowFalling = true;
+	}
+
+
 	if (state == MARIO_STATE_IDLE)
 	{
 		a = -(vx / abs(vx)) * MARIO_ACCELERATION / 3;
@@ -97,6 +138,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (ny < 0)
 		{
 			isOnFloor = true;
+			isSlowFalling = false;
+			slow_fall_mu1 = 1;
+			timeframe = 0;
 		}
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
 		//if (rdx != 0 && rdx!=dx)
@@ -137,24 +181,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<Platform*>(e->obj))
-			{
-				Platform* plat = dynamic_cast<Platform*>(e->obj);
-				/*if (e->ny < 0)
-				{
-					mul = 1;
-					isOnFloor = true;
-				}*/
-			}
-			else if (dynamic_cast<CINDES*>(e->obj))
-			{
-				CINDES* indes = dynamic_cast<CINDES*>(e->obj);
-				/*if (e->ny < 0)
-				{
-					mul = 1;
-					isOnFloor = true;
-				}*/
-			}
+			
 			if (dynamic_cast<CGoomba *>(e->obj)) // if e->obj is Goomba  
 			{
 				CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
@@ -193,7 +220,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (koopa->GetState() != KOOPAS_STATE_DIE)
 					{
 						koopa->SetState(KOOPAS_STATE_DIE);
-						vy = -MARIO_JUMP_DEFLECT_SPEED;
+						//vy = -MARIO_JUMP_DEFLECT_SPEED;
+					}
+				}
+				if (e->nx != 0)
+				{
+				if (koopa->GetState() == KOOPAS_STATE_DIE)
+					{
+					koopa->SetState(KOOPAS_SHELL_MOVE);
+					//vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 				}
 			}
@@ -302,8 +337,7 @@ void CMario::SetState(int state)
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
-		
-
+		break;
 	case MARIO_STATE_IDLE:
 		break;
 	case MARIO_STATE_DIE:
@@ -333,6 +367,7 @@ void CMario::SetState(int state)
 		break;
 	case SPACE_RELEASED:
 		mul = 0;
+		//slow_fall_mu1 = 1;
 		break;
 	case SHOOT_FIREBALL:
 		FireBall* fb = new FireBall(x, y,nx);

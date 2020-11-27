@@ -1,6 +1,7 @@
 #include "Koopas.h"
 #include "Mario.h"
 #include "Utils.h"
+#include "FireBall.h"
 CKoopas::CKoopas()
 {
 	SetState(KOOPAS_STATE_WALKING);
@@ -22,45 +23,68 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
-	vy += 0.002f * dt;
+	if (!isDead)
+	{
+		vy += 0.002f * dt;
+		vx = -0.003 * dt;
+	}
+	else if (state == KOOPAS_SHELL_MOVE)
+	{
+		vx = -0.01 * dt;
+	}
+	if (isDead && state!=KOOPAS_SHELL_MOVE)
+	{
+		vx = 0;
+		if (timeframe <= 30)
+			timeframe++;
 
+	}
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-
-	// turn off collision when die 
-	/*if (state != KOOPAS_STATE_DIE)*/
+	if (timeframe <= 30)
+	{
 		CalcPotentialCollisions(coObjects, coEvents);
 
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		// TODO: This is a very ugly designed function!!!!
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
-		if (nx != 0) vx = -vx;
-		if (ny != 0)
+		if (coEvents.size() == 0)
 		{
-			vy = 0;
+			x += dx;
+			y += dy;
 		}
+		else
+		{
+			float min_tx, min_ty, nx = 0, ny;
+			float rdx = 0;
+			float rdy = 0;
 
+			// TODO: This is a very ugly designed function!!!!
+			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+			x += min_tx * dx + nx * 0.4f;
+			if (ny < 0) y += min_ty * dy + ny * 0.4f;
+			if (nx != 0) vx = -vx;
+			if (ny != 0)
+			{
+				vy = 0;
+			}
 
+			for (UINT i = 0; i < coEventsResult.size(); i++)
+			{
+				LPCOLLISIONEVENT e = coEventsResult[i];
+				if (dynamic_cast<FireBall*>(e->obj))
+				{
+					isDead = true;
+					vy = -KOOPAS_DEFLECT_FORCE;
+				}
+			}
+		}
 	}
 
 }
 
 void CKoopas::Render()
 {
+	if (timeframe > 30) return;
 	int ani = KOOPAS_ANI_WALKING_LEFT;
 	if (vx < 0) ani = KOOPAS_ANI_WALKING_LEFT;
 	else if (vx > 0) ani = KOOPAS_ANI_WALKING_RIGHT;
@@ -70,7 +94,7 @@ void CKoopas::Render()
 
 	animation_set->at(ani)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CKoopas::SetState(int state)
@@ -79,11 +103,13 @@ void CKoopas::SetState(int state)
 	switch (state)
 	{
 	case KOOPAS_STATE_DIE:
-		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE + 1;
-		vx = 0;
-		vy = 0;
+		isDead = true;
 		break;
 	case KOOPAS_STATE_WALKING:
 		vx = -KOOPAS_WALKING_SPEED;
+		break;
+	case KOOPAS_SHELL_MOVE:
+		vx = -0.1;
+		break;
 	}
 }

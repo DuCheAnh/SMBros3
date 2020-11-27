@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 #define GOOMBA_WALKING_SPEED 0.05f;
+#define GOOMBA_DEFLECT_FORCE 0.35f
 
 #define GOOMBA_BBOX_WIDTH 16
 #define GOOMBA_BBOX_HEIGHT 15
@@ -15,6 +16,7 @@
 
 class CGoomba : public CGameObject
 {
+	bool isDead = false;
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render();

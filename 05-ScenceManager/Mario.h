@@ -8,8 +8,8 @@
 #define MARIO_ACCELERATION		0.00025f
 #define MARIO_JUMP_ACCEL		0.002f
 //0.1f
-#define MARIO_MAX_JUMP_HEIGHT	0.23f
-#define MARIO_JUMP_SPEED_Y		0.005f
+#define MARIO_MAX_JUMP_HEIGHT	0.25f
+#define MARIO_JUMP_SPEED_Y		0.3f
 #define MARIO_JUMP_DEFLECT_SPEED 0.2f
 #define MARIO_GRAVITY			0.0008f
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
@@ -112,9 +112,11 @@ class CMario : public CGameObject
 	int mul = 1;
 	int maximum_speed_mul = 2;
 	float additionalforce=0;
+	bool isSlowFalling = false;
 	bool isOnFloor;
+	bool spaceReleased=true;
 	bool isFlying = false;
-	bool canFly = false;
+	bool flyingRight = true;
 	float a,ay;
 	float start_x;			// initial position of Mario at scene
 	float start_y; 

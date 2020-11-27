@@ -12,7 +12,8 @@ FireBall::FireBall(float x, float y, int direction)
 
 void FireBall::Render()
 {
-	animation_set->at(0)->Render(x, y);
+	if(!fireOut)
+		animation_set->at(0)->Render(x, y);
 }
 
 void FireBall::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -41,8 +42,8 @@ void FireBall::Update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents);
+	if (!fireOut)
+		CalcPotentialCollisions(coObjects, coEvents);
 
 	if (coEvents.size() == 0)
 	{
@@ -68,7 +69,7 @@ void FireBall::Update(DWORD dt, std::vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (e->nx != 0)
 			{
-				//CPlayScene::getScene()->RemoveObject(this);
+				fireOut = true;
 			}
 		}
 
