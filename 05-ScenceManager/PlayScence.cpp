@@ -33,6 +33,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define SCENE_SECTION_OBJECTS	6
 #define SCENE_SECTION_INDESTRUCTIBLES	7
 
+
+
 #define OBJECT_TYPE_MARIO	0
 #define OBJECT_TYPE_BRICK	1
 #define OBJECT_TYPE_GOOMBA	2
@@ -305,7 +307,9 @@ void CPlayScene::Update(DWORD dt)
 	CGame *game = CGame::GetInstance();
 	cx -= game->GetScreenWidth() / 2;
 	cy -= game->GetScreenHeight() / 2;
-
+	if (cx < 0) cx = 0;
+	if (cy > 234)	cy = 234;
+	if (cx > 2480) cx = 2480;
 	CGame::GetInstance()->SetCamPos(cx, cy);
 }
 
@@ -409,7 +413,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		mario->SetState(MARIO_STATE_IDLE);
 	if (game->IsKeyDown(DIK_SPACE))
 		mario->SetState(MARIO_HOLD_JUMP);
-	if (game->IsKeyDown(DIK_C) && mario->GetLevel()==MARIO_LEVEL_RACOON)
+	if (game->IsKeyDown(DIK_C))
 	{
 		mario->SetState(RACOON_TAKING_OFF);
 	}

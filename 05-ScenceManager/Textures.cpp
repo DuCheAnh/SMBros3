@@ -48,7 +48,7 @@ void CTextures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
 		&info,
 		NULL,
 		&texture);								// Created texture pointer
-
+	
 	d3ddv->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
 
 	if (result != D3D_OK)

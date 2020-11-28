@@ -1,6 +1,7 @@
 #include "Goomba.h"
 #include "Mario.h"
 #include "FireBall.h"
+#include "Koopas.h"
 CGoomba::CGoomba()
 {
 	SetState(GOOMBA_STATE_WALKING);
@@ -65,6 +66,16 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				{
 					isDead = true;
 					vy = -GOOMBA_DEFLECT_FORCE;
+				}
+				if (dynamic_cast<CKoopas*>(e->obj))
+				{
+					CKoopas* koopa = dynamic_cast<CKoopas*>(e->obj);
+					if (koopa->GetState() == KOOPAS_STATE_SHELL_MOVING)
+					{
+						isDead = true;
+						vy = -GOOMBA_DEFLECT_FORCE;
+					}
+
 				}
 			}
 

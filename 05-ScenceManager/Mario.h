@@ -40,6 +40,8 @@
 #define MARIO_ANI_BIG_JUMP_RIGHTDN 12
 #define MARIO_ANI_BIG_JUMP_LEFTUP 13
 #define MARIO_ANI_BIG_JUMP_LEFTDN 14
+#define MARIO_ANI_BIG_MAXSPD_RIGHT 43
+#define MARIO_ANI_BIG_MAXSPD_LEFT 44
 #pragma endregion
 
 #pragma region Small ani
@@ -55,6 +57,9 @@
 #define MARIO_ANI_SMALL_JUMP_RIGHTDN 18
 #define MARIO_ANI_SMALL_JUMP_LEFTUP 19
 #define MARIO_ANI_SMALL_JUMP_LEFTDN 20
+#define MARIO_ANI_SMALL_MAXSPD_RIGHT 41
+#define MARIO_ANI_SMALL_MAXSPD_LEFT 42
+
 #pragma endregion
 
 #pragma region Fire ani
@@ -70,6 +75,10 @@
 #define MARIO_ANI_FIRE_JUMP_RIGHTDN 28
 #define MARIO_ANI_FIRE_JUMP_LEFTUP 29
 #define MARIO_ANI_FIRE_JUMP_LEFTDN 30
+#define MARIO_ANI_FIRE_MAXSPD_RIGHT 45
+#define MARIO_ANI_FIRE_MAXSPD_LEFT 46
+#define MARIO_ANI_FIRE_SHOOT_RIGHT 49
+#define MARIO_ANI_FIRE_SHOOT_LEFT 50
 #pragma endregion
 
 #pragma region Racoon ani
@@ -85,6 +94,8 @@
 #define MARIO_ANI_RACOON_JUMP_RIGHTDN 38
 #define MARIO_ANI_RACOON_JUMP_LEFTUP 39
 #define MARIO_ANI_RACOON_JUMP_LEFTDN 40
+#define MARIO_ANI_RACOON_MAXSPD_RIGHT 47
+#define MARIO_ANI_RACOON_MAXSPD_LEFT 48
 #pragma endregion
 
 
@@ -131,7 +142,7 @@ public:
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StateRenderding(int& ani, int idleR, int idleL, int walkingR, int walkingL, int breakR, int breakL,
-						int jumpRup, int jumpRdn, int jumpLup, int jumpLdn);
+						int jumpRup, int jumpRdn, int jumpLup, int jumpLdn, int maxspdR, int maxspdL);
 	void Reset();
 	int GetHeight() { return height; }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

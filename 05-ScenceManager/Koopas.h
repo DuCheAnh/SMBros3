@@ -19,7 +19,10 @@
 
 #define KOOPAS_ANI_WALKING_LEFT 0
 #define KOOPAS_ANI_WALKING_RIGHT 1
-#define KOOPAS_ANI_DIE 2
+#define KOOPAS_ANI_SHELL 2
+#define KOOPAS_ANI_MOVING_SHELL 3
+
+#define KOOPAS_ANI_DIE	5
 
 class CKoopas : public CGameObject
 {

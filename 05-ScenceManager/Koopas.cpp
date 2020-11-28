@@ -71,6 +71,16 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					passthrough = true;
 				}
+				if (dynamic_cast<CKoopas*>(e->obj))
+				{
+					CKoopas* koopa = dynamic_cast<CKoopas*>(e->obj);
+					if (koopa->GetState() == KOOPAS_STATE_SHELL_MOVING)
+					{
+						isDead = true;
+						vy = -KOOPAS_DEFLECT_FORCE;
+					}
+
+				}
 			}
 			if (nx != 0 )
 			{
@@ -91,7 +101,13 @@ void CKoopas::Render()
 	if (state == KOOPAS_STATE_DIE) {
 		ani = KOOPAS_ANI_WALKING_LEFT;
 	}
-
+	if (state == KOOPAS_STATE_SHELL)
+		ani = KOOPAS_ANI_SHELL;
+	if (state == KOOPAS_STATE_SHELL_MOVING)
+	{
+		ani = KOOPAS_ANI_MOVING_SHELL;
+	}
+	
 	animation_set->at(ani)->Render(x, y);
 
 	//RenderBoundingBox();

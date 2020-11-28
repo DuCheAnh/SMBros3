@@ -14,6 +14,7 @@ class CTextures
 	unordered_map<int, LPDIRECT3DTEXTURE9> textures;
 
 public: 
+	int width, height;
 	CTextures();
 	void Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor);
 	LPDIRECT3DTEXTURE9 Get(unsigned int i);
